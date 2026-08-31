@@ -1,0 +1,55 @@
+---
+title: Content decisions
+sidebar_position: 3
+description: "Why the site's content is organized the way it is, and what that buys."
+---
+
+import Callout from '@site/src/components/Callout';
+
+# Content decisions
+
+`About → Case studies → Samples → Meta` is not an arbitrary taxonomy. It's
+a writing argument: the site should both *contain* the work and *be* the
+evidence for it.
+
+## Why this taxonomy
+
+- **About** is a CV rendered as a doc page. Not because resumes on the web
+  are novel — but because rendering the career as structured documentation
+  is a statement about how I approach any content surface.
+- **Case studies** use one mechanism — context, problem, approach, result,
+  artifacts, lessons — on purpose. Familiar structure makes the content
+  differences visible; funny category navigation hides them.
+- **Samples** is the "show, don't tell" surface. A portfolio reader gets the
+  small writing patterns (a good how-to and a good API reference differ in
+  purpose, not in quality) in a form they can evaluate in a minute.
+- **Meta** documents the docs. A documentation engineer's site that
+  can't explain its own pipeline would be an underdog argument.
+
+<Callout type="decision">
+No testimonials section. Every claim on this site resolves to a page you can
+read; a sentence someone else said about me doesn't.
+</Callout>
+
+## Samples domain: why an invented product
+
+The samples document **Taskline**, a fictional task-automation and
+monitoring SaaS.
+
+- The domain is deliberately distant from my day-job subject matter.
+  An invented product is credible precisely because nobody's NDA is in
+  question; choosing a *neighboring-but-not-overlapping* domain (task
+  automation, not data quality) makes the distance obvious to the reader.
+- It still showcases the patterns a real writing role uses — a quickstart's
+  "smallest meaningful outcome", a how-to's "one goal, no detours",
+  reference separation from guides, failure-first troubleshooting.
+- It is **explicitly labeled** as invented, so the credibility argument
+  travels unbroken: the reader evaluates the writing, not the brand behind it.
+
+## A/B content-design examples: why "before/after", not "experiments"
+
+The copy examples are shown as **rewrites** with rationale attached, not as
+"which variant won" A/B tests. My content-design work was primarily
+**rewrite in context** — the way product UX copy actually gets approved.
+Showing the rewrite and its reasoning is both faithful to the work and
+clearer to the reader than an experiment framed badly.

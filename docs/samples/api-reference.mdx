@@ -1,0 +1,144 @@
+---
+title: API reference
+sidebar_position: 4
+description: "Taskline monitors endpoint — framed OpenAPI-style."
+---
+
+# API reference
+
+Taskline exposes a REST API. The full spec is OpenAPI 3.1; the examples
+below frame the `monitors` endpoint the way the spec does.
+
+## Authentication
+
+Send a workspace token in the `Authorization` header:
+
+```
+Authorization: Bearer <token>
+```
+
+Tokens are workspace-scoped and read-only by default.
+
+## Object: `Monitor`
+
+| Field | Type | Description |
+|---|---|---|
+| `id` | string | Unique identifier. `mon_`-prefixed. |
+| `name` | string | Display name, 1–80 chars. Uniqueness is per source. |
+| `source` | string | Name of the registered data source. |
+| `expectations` | [Expectation](#expectation)[] | The checks the monitor evaluates. |
+| `sla` | object? | Optional [SLA](#sla) enforcement configuration. |
+| `created_at` | string (RFC 3339) | Creation timestamp. |
+| `state` | enum | `ok`, `warning`, `violated`, `unknown`. `unknown` until the first evaluation completes. |
+
+#### `Expectation`
+
+| Field | Type | Description |
+|---|---|---|
+| `type` | enum | `max_age_hours`, `count_above`, `count_below`, `uniqueness`, `completeness`. |
+| `value` | number \| string | Threshold for the check. Required for all types except `completeness`. |
+
+#### `SLA`
+
+| Field | Type | Description |
+|---|---|---|
+| `max_failure_rate` | number | Fraction of failing records before violation. 0–1. |
+| `window` | enum | `daily`, `weekly`. Rolling evaluation window. |
+
+## Endpoints
+
+### List monitors
+
+```
+GET /v1/monitors
+```
+
+Query parameters:
+
+| Parameter | Type | Description |
+|---|---|---|
+| `source` | string? | Restrict to a single source by name. |
+| `state` | enum? | Filter by monitor state (see `state` above). |
+| `limit` | integer? | Default `50`, max `200`. |
+| `cursor` | string? | Pagination cursor from a previous response. |
+
+Response (200):
+
+```json
+{
+  "object": "list",
+  "data": [
+    {
+      "id": "mon_01HFY4ZP3A",
+      "name": "tasks_not_stale",
+      "source": "tasks_api",
+      "state": "warning",
+      "created_at": "2026-08-18T14:32:11Z"
+    }
+  ],
+  "has_more": false,
+  "next_cursor": null
+}
+```
+
+### Create a monitor
+
+```
+POST /v1/monitors
+```
+
+Request body: `application/json` matching the `Monitor` object minus `id`
+and `created_at`:
+
+```json
+{
+  "name": "tasks_not_stale",
+  "source": "tasks_api",
+  "expectations": [
+    {"type": "max_age_hours", "value": 24}
+  ],
+  "sla": {"max_failure_rate": 0.001, "window": "daily"}
+}
+```
+
+Response (201): the created `Monitor` object, including the server-generated
+`id`.
+
+### Get a monitor
+
+```
+GET /v1/monitors/{monitor_id}
+```
+
+### Run an evaluation
+
+```
+POST /v1/monitors/{monitor_id}/evaluations
+```
+
+Starts an evaluation asynchronously and returns the evaluation handle:
+
+```json
+{
+  "evaluation_id": "evl_9KQgkC2x2v",
+  "status": "queued"
+}
+```
+
+Poll `GET /v1/evaluations/{evaluation_id}` until the status is `completed`
+or `failed`.
+
+## Errors
+
+Taskline returns conventional HTTP codes with a consistent error envelope:
+
+| Code | `error.type` | Meaning |
+|---|---|---|
+| `400` | `invalid_request` | The request body violates the spec. |
+| `401` | `authentication_error` | Missing or invalid token. |
+| `403` | `permission_error` | Token workspace lacks access. |
+| `404` | `not_found` | Monitor or evaluation ID doesn't exist. |
+| `429` | `rate_limited` | Retry with backoff; see the `Retry-After` header. |
+
+All error responses include a `request_id`; report it when you contact the
+Taskline team.

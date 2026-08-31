@@ -1,0 +1,22 @@
+.removed {
+  background-color: rgba(220, 53, 69, 0.15);
+  color: #c2334d;
+  text-decoration: line-through;
+  text-decoration-thickness: 1px;
+}
+
+[data-theme='dark'] .removed {
+  color: #ff8a94;
+}
+
+.added {
+  background-color: rgba(37, 194, 160, 0.2);
+  color: #157a63;
+  text-decoration: none;
+  padding: 0 0.15em;
+  border-radius: 0.2em;
+}
+
+[data-theme='dark'] .added {
+  color: #4fddbf;
+}

@@ -1,0 +1,92 @@
+---
+title: AI-assisted docs workflows
+sidebar_position: 3
+description: "Case study: Claude Code plugins for docs style checks and automatic UI copy review."
+---
+
+import Callout from '@site/src/components/Callout';
+import Metric from '@site/src/components/Metric';
+
+# AI-assisted docs workflows
+
+## Context
+
+Documentation quality is decided in the small: consistent terminology,
+sentence rhythm, the difference between "the system failed" and
+"the operation could not be completed."
+
+Manual quality maintenance doesn't scale. A style guide nobody can carry in
+their head is aspirational; a CI rule rigidly enforced is brittle.
+
+## Problem
+
+Three distinct quality gaps in my current role:
+
+1. **Docs prose drift** — terminology, voice, and structure varied across a
+   growing surface; nobody had a short feedback loop to keep them aligned.
+2. **UI copy lacking a reviewer** — digital copy from many teams rarely went
+   through a content-design pass; when it did, the pass was late.
+3. **Prompt engineering as guesswork** — ad-hoc prompts to generic assistants
+   produced uneven results and couldn't be shared, versioned, or audited.
+
+## Approach
+
+A set of **Claude Code plugins**, distributed as small, reviewable configs,
+built for three workflows:
+
+**1. Documentation style & syntax checks.** The plugin reads the docs diff
+and our style guide, then produces targeted comments: terminology drift,
+unclear agentic/probabilistic explanations, structure violations. Crucially,
+it **proposes patches** — the comment arrives as a suggestion, not a
+judgment.
+
+**2. Automatic UI copy review.** Written for the design-development loop:
+a short pre-review of UI strings for voice, tone, terminology, and
+in-context usefulness — so the early draft doesn't travel without content
+design experience attached.
+
+**3. Versioned, auditable prompt flows.** Each plugin is a *documented*
+configuration: the prompt is versioned, reviewed like code, and repeatable.
+
+<Callout type="context">
+The plugins don't replace editorial judgment; they absorb the repetitive
+first pass so my judgment concentrates on the decisions that need it. That's
+the point of the "AI as multiplier" idea.
+</Callout>
+
+## Result
+
+<div className="metric-row">
+  <Metric value="every diff" label="gets a style pass" />
+  <Metric value="shared" label="prompts versioned like code" />
+  <Metric value="earlier" label="content-design feedback on UI copy" />
+</div>
+
+- Consistency issues surface per-change instead of per-release.
+- UI copy gets content-design attention before it hardens in the product.
+- Prompt flows became a team asset — inspectable, not personal folklore.
+
+## Artifacts
+
+- A plugin sketch (Claude Code / slash-command style):
+
+```json
+{
+  "name": "docs-style",
+  "description": "Review a docs diff against our style guide.",
+  "scope": "documentation",
+  "rules": [
+    "Terminology: flag drift from docs/glossary.md.",
+    "Voice: prefer active, second person in procedures.",
+    "Structure: one concept per section.",
+    "Propose minimal edits as code suggestions, one per comment."
+  ]
+}
+```
+
+## Lessons
+
+- Auditable prompts travel in a repo; folklore prompts don't.
+- The tools earn trust by producing small, reversible suggestions.
+- UI copy is a docs problem that **arrives earlier**. Extending the docs
+  pipeline to cover it is the natural conclusion.

@@ -1,0 +1,90 @@
+---
+title: Quickstart
+sidebar_position: 2
+description: "Get a Taskline project running in under ten minutes."
+---
+
+# Quickstart
+
+This quickstart takes you from a fresh account to a **working task monitor
+with evaluated results** — the smallest meaningful outcome Taskline can
+give you.
+
+## Prerequisites
+
+- A Taskline workspace. [Create a free one](https://example.invalid) if you
+  don't have one yet.
+- A readable data source. This guide uses a PostgreSQL connection with
+  read-only access.
+- The `taskline` CLI:
+
+```bash
+brew install taskline/tap/taskline
+```
+
+## 1. Connect a data source
+
+Save this as `sources/tasks.yml`:
+
+```yaml
+kind: source
+name: tasks_api
+type: postgres
+host: db.internal.example.com
+port: 5432
+database: tasks
+```
+
+Register it:
+
+```bash
+taskline source apply -f sources/tasks.yml
+```
+
+You should see:
+
+```
+✓ source tasks_api registered
+```
+
+## 2. Define a monitor
+
+Monitors evaluate records against expectations. Save as
+`monitors/tasks_not_stale.yml`:
+
+```yaml
+kind: monitor
+name: tasks_not_stale
+source: tasks_api
+description: Open tasks should be updated at least every 24 hours.
+target:
+  table: tasks
+  column: updated_at
+expectations:
+  - type: max_age_hours
+    value: 24
+```
+
+## 3. Run the evaluation
+
+```bash
+taskline monitor run tasks_not_stale
+```
+
+Sample output:
+
+```
+tasks.tasks_not_stale
+  evaluated 412,108 tasks in 2.3 s
+  passed   411,912   failed  196
+  status   warning   (failure rate 0.048%, threshold 0%)
+```
+
+## What's next
+
+- **[Enforce the result as an automation SLA](./how-to-enforce-a-data-sla)** —
+  run monitors on a schedule and fail automations that violate them.
+- **[API reference](./api-reference)** — drive the same flow from the REST
+  API.
+- **[Troubleshooting](./troubleshooting)** — common failure modes for the
+  steps above.

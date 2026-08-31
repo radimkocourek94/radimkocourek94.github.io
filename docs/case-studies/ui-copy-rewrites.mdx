@@ -1,0 +1,129 @@
+---
+title: UI copy rewrites
+sidebar_position: 5
+description: "Case study: before/after rewrites of copy for complex SaaS workflows, with rationale."
+---
+
+import BeforeAfter from '@site/src/components/BeforeAfter';
+import Diff from '@site/src/components/Diff';
+import Callout from '@site/src/components/Callout';
+
+# UI copy rewrites
+
+Content design is rarely judged sentence-by-sentence. It's judged by how the
+workflow *feels* in context. This case study shows a few representative
+rewrites as **before/after comparisons** with the reasoning attached —
+generalized from SaaS workflow work across my roles — an enterprise
+data-quality platform currently, and ERP-scale SaaS before that.
+
+<Callout type="context">
+Names and specific product details are generalized. The rewrite moves —
+concreteness, de-blaming, scannable structure, voice alignment — are the
+actual techniques.
+</Callout>
+
+## Rewrite 1 — error state: tell the user what to do
+
+<BeforeAfter
+  before={
+    <>
+      <p>An error occurred during data ingestion. The operation was
+      unsuccessful. Refer to the documentation to understand why data
+      profiling failed.</p>
+    </>
+  }
+  after={
+    <>
+      <p>Data ingestion stopped before profiling could start.</p>
+      <p>Check that the source connection is available, then retry. If
+      ingestion keeps failing, view the ingestion log for the exact step
+      that stopped.</p>
+    </>
+  }
+  rationale={
+    <>
+      The "after" version removes the diagnosing imperative and the
+      documentation redirect. It names the action, the blockage point, and
+      the next step — so the user isn't asked to reverse-engineer the failure.
+    </>
+  }
+/>
+
+## Rewrite 2 — empty states: describe the absence, not the feature
+
+<BeforeAfter
+  before={
+    <>
+      <p>No data. Create a data quality rule to start evaluating records.</p>
+    </>
+  }
+  after={
+    <>
+      <p>No rules yet.</p>
+      <p>Rules evaluate your records against expectations. When you create
+      your first rule, its evaluation results appear here.</p>
+    </>
+  }
+  rationale={
+    <>
+      Empty states are a teaching surface. The rewrite replaces "no data"
+      (ambiguous — is the data missing?) with "no rules yet" (historic, imminent,
+      actionable), and previews what will change once the user acts.
+    </>
+  }
+/>
+
+## Rewrite 3 — destructive confirmation: echo the actual consequence
+
+<BeforeAfter
+  before={
+    <>
+      <p>Are you sure you want to delete the connection? This action cannot
+      be undone.</p>
+    </>
+  }
+  after={
+    <>
+      <p>Delete connection <code>prod-warehouse-04</code>?</p>
+      <p>Ingestion for this connection will stop. Scheduled jobs and all
+      3 dependent workflows will fail until you reconnect.</p>
+    </>
+  }
+  rationale={
+    <>
+      "Cannot be undone" is generic and often false. The rewrite names the
+      object, lists the concrete downstream effects, and helps the user
+      choose — without the punitive tone of "this might hurt!"
+    </>
+  }
+/>
+
+## Rewrite 4 — progressive disclosure inside one sentence
+
+Original:
+
+> The rule <Diff removed="is configured to evaluate the data quality of
+> all records based on the criteria that you have specified during the
+> configuration of the rule, which is applied when the job runs"
+> added="evaluates every record against your specified criteria on each
+> scheduled run" />.
+
+## Voice decisions behind the rewrites
+
+- **Name object and consequence.** Pick the one user-most-impacting
+  consequence and put it explicitly before the "confirm" action.
+- **De-blame the system.** "Failed" out; "stopped before," "couldn't
+  complete," or "didn't finish" in. The user isn't at fault and
+  shouldn't be told they are.
+- **Preview the absent thing.** Empty states and confirmations that hint
+  at the future content of the screen beat both silent absence and
+  legalistic warnings.
+- **Compress compound conditionals.** If a user must hold three nested
+  conditions to parse the sentence, split the sentence, not the meaning.
+
+## Lessons
+
+- Before/after comparisons travel better than style-guide arguments. The
+  diff *is* the rationale.
+- Nearly every "clarifying" rewrite lowers the cognitive cost of the
+  screen's next decision. That's measurable enough to be persuasive.

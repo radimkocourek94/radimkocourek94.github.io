@@ -1,0 +1,83 @@
+---
+title: Enforce an automation SLA
+sidebar_position: 3
+description: "Schedule monitors and fail the automation when they violate the SLA."
+---
+
+# How to enforce an automation SLA
+
+**Goal:** run a monitor on a schedule and make a downstream automation fail
+when the monitor's failure rate exceeds the SLA.
+
+This is the how-to version of the story: one goal, no alternatives. If the
+goal doesn't match yours, the [API reference](./api-reference) covers the
+full surface.
+
+## Before you start
+
+Have a working monitor — [create one with the quickstart](./quickstart) if
+you don't have one.
+
+## 1. Attach an SLA threshold to the monitor
+
+In your monitor definition, add `sla`:
+
+```yaml
+kind: monitor
+name: tasks_not_stale
+source: tasks_api
+description: Open tasks should be updated at least every 24 hours.
+target:
+  table: tasks
+  column: updated_at
+expectations:
+  - type: max_age_hours
+    value: 24
+sla:
+  max_failure_rate: 0.001   # 0.1%
+  window: daily             # rolling 24-hour window
+```
+
+`max_failure_rate` is the failing-tasks share the monitor accepts before
+the SLA is violated.
+
+## 2. Schedule the run
+
+Attach a cron schedule:
+
+```yaml
+schedule: "*/15 * * * *"   # every 15 minutes
+```
+
+After the next scheduled run, the monitor's SLA state is visible:
+
+```bash
+taskline monitor get tasks_not_stale
+```
+
+## 3. Block the downstream automation
+
+Give your automation a gate: query the monitor's SLA state and stop when
+it's `violated`.
+
+```bash
+STATE=$(taskline monitor get tasks_not_stale --format json \
+  | jq -r .sla.state)
+[ "$STATE" = "ok" ] || exit 1
+```
+
+Wire that step before any automation that depends on the `tasks` table.
+
+## Verify it
+
+Force a violation (for example, insert a task whose `updated_at` is older
+than 24 hours on a test connection) and run the gate — it should exit `1`.
+Revert the data, run again, and the gate opens.
+
+## Troubleshooting
+
+- **The gate never opens.** Check whether the evaluation has ever succeeded;
+  a monitor with no evaluation yet reports state `unknown`, which the gate
+  treats as `exit 1`. Run the monitor once manually.
+- **Violations flap.** Raise `window` to `weekly` or add a grace period to
+  the expectation before turning enforcement back on.

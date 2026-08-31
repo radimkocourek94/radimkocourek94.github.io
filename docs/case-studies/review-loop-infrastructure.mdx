@@ -1,0 +1,105 @@
+---
+title: Compressing the review loop
+sidebar_position: 2
+description: "Case study: documentation preview pipeline and comments system built on GitLab CI/CD and AWS."
+---
+
+import Callout from '@site/src/components/Callout';
+import Metric from '@site/src/components/Metric';
+
+# Compressing the review loop
+
+## Context
+
+Lets say your
+documentation lives in Git alongside the product code: a docs-as-code
+setup where every change is a merge request. The docs are AsciiDoc
+sources, assembled by Antora, published through AWS.
+
+The bottleneck is never writing. It's **reviewing**.
+
+## Problem
+
+Doc reviews happen on raw source or rapidly drifting local arifacts being sent back and forth. Reviewers (product designers, engineers,
+PMs) have to either:
+
+- build the docs locally — a setup hurdle most reviewers would never bother with, or
+- review AsciiDoc markup and *imagine* the rendered result.
+- send multiple PDFs builds to go back and forth on
+
+The predictable outcome: review cycles of days, feedback arriving in batches
+of "one more thing", and a real cost in lost context between each round.
+
+The second, quieter problem: **feedback lives in merge-request comments
+detached from the rendered page**. Discussing a paragraph means pasting it
+into a comment and describing where it is.
+
+## Approach
+
+Two infrastructure pieces, built one after the other and designed to
+compose:
+
+**1. Rendered previews for any branch on demand.** A GitLab CI/CD pipeline
+that lets you build any branch in a matter of minutes on demand and deploys it to a static site host (lets say GitLab Pages).
+
+The work has two non-obvious parts:
+
+- **Multi-project artifacts.** Product documentation is spread across
+  several repositories. The pipeline resolves which cross-repo dependencies
+  an MR touches and builds a coherent preview anyway.
+- **Speed.** The pipeline caches the Antora UI bundle and the prose-heavy
+  build steps, so the common case renders in minutes — cheap enough to run
+  at any time, safe enough to be *expected*.
+
+**2. A lightweight comments system on the rendered preview.** Reviewers
+comment in place, on the rendered page; the comments get resolved before the
+MR gets merged. Feedback now attaches to the thing readers actually see, not to the
+markup underneath. This is handled by a custom script that saves comments to a database running on AWS with CRUD handled by lambda functions.
+Imagine commenting on Google Docs just on your static docs site!
+
+<Callout type="decision">
+Pre-merge previews were chosen over a staging site refreshed on merge. The
+per-MR preview keeps every discussion *before* the merge, which is where it
+can still change the outcome cheaply.
+</Callout>
+
+## Result
+
+<div className="metric-row">
+  <Metric value="days → minutes" label="feedback loop" />
+  <Metric value="in place" label="comments on rendered output" />
+  <Metric value="lower" label="friction for non-writer reviewers" />
+</div>
+
+- Review cycles compressed from days to near-instant feedback; reviewers no
+  longer need any local tooling.
+- Non-writer reviewers now engage earlier and more concretely; feedback
+  targets wording and layout instead of source formatting.
+- The pipeline earned an **honorable mention at the internal AI Engineering
+  Hackathon** and became the default review environment.
+
+## Artifacts
+
+- GitLab CI/CD job (simplified):
+
+```yaml
+docs-preview:
+  stage: build
+  script:
+    - antora generate playbook.yml --cache-dir=.antora-cache
+  environment:
+    name: mr-preview/$CI_BRANCH_IID
+    url: $DOCS_PREVIEW_BASE_URL/$CI_BRANCH_IID
+```
+
+- The approach at work: reviewers see how an Antora-rendered **page** reads,
+  not what the paragraph looks like as source.
+
+## Lessons
+
+- The review *environment* is a product. It merits design attention: speed,
+  a stable URL per BRANCH, readable diffs to the *rendered* result via comment resolution notes.
+- Two-step improvements beat one big one: the comments system landed on top
+  of an already-rendered preview, so each investment compounded the previous.
+- "The docs build" sounds like infrastructure noise. In fact it was the
+  single biggest quality multiplier in the review process.

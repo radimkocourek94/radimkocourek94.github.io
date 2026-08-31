@@ -1,0 +1,36 @@
+.callout {
+  margin: 1.25rem 0;
+  padding: 0.85rem 1rem;
+  border-left: 4px solid var(--ifm-color-primary);
+  border-radius: var(--ifm-global-radius);
+  background: var(--ifm-color-emphasis-100);
+}
+
+.context {
+  border-left-color: #8b97f2;
+}
+
+.decision {
+  border-left-color: #25c2a0;
+}
+
+.warning {
+  border-left-color: #d97706;
+}
+
+.title {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.35rem;
+  color: var(--ifm-color-emphasis-800);
+}
+
+.body {
+  font-size: 0.92rem;
+}
+
+.body > :last-child {
+  margin-bottom: 0;
+}

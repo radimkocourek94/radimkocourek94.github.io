@@ -1,0 +1,82 @@
+---
+title: Troubleshooting
+sidebar_position: 5
+description: "Failure-first troubleshooting for Taskline. State → cause → verified fix."
+---
+
+# Troubleshooting
+
+Each entry is anchored in the screen where the failure appears, then
+marched through **possible causes** and a **verified fix**.
+
+## The CLI can't see my source
+
+**Symptom:** `taskline source apply` reports `error: source not reachable`.
+
+**Possible causes:**
+
+1. The host is private and Taskline has no network route to it.
+2. TLS verification fails because the database uses an internal CA.
+
+**Verified fix (cause 1):** place a [Taskline
+agent](./how-to-enforce-a-data-sla) in the same network and set
+`spec.agent: true` on the source. Re-apply; registration confirms the agent
+route.
+
+**Verified fix (cause 2):** add the CA bundle path in the source YAML:
+
+```yaml
+tls:
+  ca_file: /etc/ssl/internal/ca.pem
+```
+
+Re-run the apply; the registration message lists
+`tls: verified (internal CA)`.
+
+## My monitor never reaches state `ok`
+
+**Symptom:** `taskline monitor get <name>` reports `state: unknown` for
+longer than the first expected run.
+
+**Possible causes:**
+
+1. The scheduled evaluation crashed before reaching the SLA window.
+2. `sla.window` exceeds the available evaluation history.
+
+**Verified fix (cause 1):** check the evaluation log:
+`taskline evaluations list --monitor <name>`. A crash with exit code
+`137` (OOM) is the most common cause on wide tables; re-run with
+`--max-records 2000000` as a limit and adjust if the count passes.
+
+**Verified fix (cause 2):** a `weekly` SLA window needs at least one
+calendar week of completed evaluations. Until then, `unknown` is expected.
+Run a few manual evaluations if you want the gate to unblock immediately.
+
+## The SLA gate stops the automation but the data looks fine
+
+**Symptom:** the gate exits `1` while a manual spot-check of the tasks
+passes.
+
+**Possible causes:**
+
+1. The failing records share a known-null class the expectation didn't
+   account for.
+2. The alerting threshold is rounding up a rounding-heavy failure rate.
+
+**Verified fix (cause 1):** add an explicit null expectation or exclude the
+class in `where`, then re-check the previous evaluation windows. If
+previous windows still pass with the new monitor, the result holds.
+
+**Verified fix (cause 2):** raise `max_failure_rate` by one decimal (for
+example, `0.001` → `0.01`) and watch the violation frequency. If the
+automation is genuinely healthy at the new threshold, the earlier value was
+too strict for this dataset.
+
+## Nothing above matches my failure
+
+1. Run `taskline monitor get <name> --format json` and note the
+   `request_id` and `sla.window`.
+2. Attach the last evaluation log
+   (`taskline evaluations list --monitor <name>`).
+3. Report the bundle to the Taskline team; mention the `request_id` from
+   the failing response.
