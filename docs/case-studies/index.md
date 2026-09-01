@@ -5,8 +5,8 @@ sidebar_position: 1
 
 # Case studies
 
-Each case study, apart from the UX writing orianted examples, follows the same structure: **context → problem → approach
-→ result → artifacts → lessons**. The stories are inspired in real work
+Each case study, apart from the UX writing oriented examples, follows the same structure: **context → problem → approach
+→ result → artifacts → lessons**. The stories are inspired by real work
 from my career.
 
 ## The case studies
