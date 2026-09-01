@@ -16,7 +16,7 @@ const FeatureList: FeatureItem[] = [
     to: '/docs/samples',
     description: (
       <>
-        Quickstarts, how-to guides, API references, and troubleshooting — a
+        Quickstarts, how-to guides, API references, and troubleshooting. A
         complete mini documentation set for a fictional SaaS product, written
         as a living sample of the craft.
       </>
@@ -27,8 +27,8 @@ const FeatureList: FeatureItem[] = [
     to: '/docs/case-studies/ui-copy-rewrites',
     description: (
       <>
-        UI copy, terminology, and voice &amp; tone for complex workflows —
-        shown as before/after rewrites with the reasoning attached, not just
+        UI copy, terminology, and voice &amp; tone for complex workflows.
+        Shown as before/after rewrites with the reasoning attached, not just
         the result.
       </>
     ),
