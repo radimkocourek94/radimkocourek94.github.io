@@ -9,7 +9,7 @@ deployed to GitHub Pages by GitHub Actions.
 - `docs/case-studies/` — grounded portfolio case studies
   (review-loop infrastructure, AI-assisted docs workflows, UI copy rewrites)
 - `docs/samples/` — invented-but-realistic mini documentation set for a
-  fictional SaaS ("Veridity"): quickstart, how-to, API reference,
+  fictional SaaS ("Taskline"): quickstart, how-to, API reference,
   troubleshooting
 - `docs/meta/` — the self-referential case study of this site
 - `src/pages/` — landing + About (career narrative + inline CV)
