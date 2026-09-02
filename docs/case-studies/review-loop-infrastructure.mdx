@@ -11,7 +11,7 @@ import Metric from '@site/src/components/Metric';
 
 ## Context
 
-Lets say your
+Let's say your
 documentation lives in Git alongside the product code: a docs-as-code
 setup where every change is a merge request. The docs are AsciiDoc
 sources, assembled by Antora, published through AWS.
@@ -20,7 +20,7 @@ The bottleneck is never writing. It's **reviewing**.
 
 ## Problem
 
-Doc reviews happen on raw source or rapidly drifting local arifacts being sent back and forth. Reviewers (product designers, engineers,
+Doc reviews happen on raw source or rapidly drifting local artifacts being sent back and forth. Reviewers (product designers, engineers,
 PMs) have to either:
 
 - build the docs locally — a setup hurdle most reviewers would never bother with, or
@@ -40,7 +40,7 @@ Two infrastructure pieces, built one after the other and designed to
 compose:
 
 **1. Rendered previews for any branch on demand.** A GitLab CI/CD pipeline
-that lets you build any branch in a matter of minutes on demand and deploys it to a static site host (lets say GitLab Pages).
+that lets you build any branch in a matter of minutes on demand and deploys it to a static site host (let's say GitLab Pages).
 
 The work has two non-obvious parts:
 
@@ -98,7 +98,7 @@ docs-preview:
 ## Lessons
 
 - The review *environment* is a product. It merits design attention: speed,
-  a stable URL per BRANCH, readable diffs to the *rendered* result via comment resolution notes.
+  a stable URL per branch, readable diffs to the *rendered* result via comment resolution notes.
 - Two-step improvements beat one big one: the comments system landed on top
   of an already-rendered preview, so each investment compounded the previous.
 - "The docs build" sounds like infrastructure noise. In fact it was the
