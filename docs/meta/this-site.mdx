@@ -49,6 +49,16 @@ The workflow in [.github/workflows/deploy.yml](https://github.com/radimkocourek9
 1. **Build** on every push to `main`: `npm ci`, `npm run build`.
 2. **Deploy** the static `build/` output with the official Pages actions.
 
+Two more workflows keep the content honest:
+
+- **Lint** ([lint.yml](https://github.com/radimkocourek94/radimkocourek94.github.io/blob/main/.github/workflows/lint.yml))
+  runs Vale on every push and PR — a checked-in style package
+  (`styles/Portfolio/`) and a project vocabulary, so the prose is linted
+  like the code.
+- **Link check** ([link-check.yml](https://github.com/radimkocourek94/radimkocourek94.github.io/blob/main/.github/workflows/link-check.yml))
+  runs lychee weekly against `docs/` and `src/pages/` to catch drift
+  before a recruiter does.
+
 The whole pipeline runs in about a minute. Reviewing a change means reading
 its rendered diff — the rendered page is the artifact under review.
 
@@ -67,11 +77,7 @@ one-line change in `docusaurus.config.ts`.
   infrastructure.
 - **Custom MDX components** (`BeforeAfter`, `Diff`, `Metric`, `Callout`)
   carry the content-design argument inside the prose.
-- **Contact is deliberately thin** — email and LinkedIn only. Phone stays
-  private.
 
 ## What I'd do next
 
-- Add **Vale** in CI with a documented style guide for the site itself;
-  nothing says docs as code like a checked-in prose linter.
-- Add a link checker in CI to catch drift before a recruiter does.
+- Make the Vale ruleset blocking once it's tuned — it runs advisory for now.

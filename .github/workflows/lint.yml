@@ -1,0 +1,19 @@
+name: Lint (Vale)
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  vale:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Vale
+        uses: vale-cli/vale-action@v3
+        with:
+          files: '["docs", "src/pages"]'
+          filter_mode: nofilter
+          fail_on_error: false

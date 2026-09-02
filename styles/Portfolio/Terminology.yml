@@ -1,0 +1,14 @@
+extends: substitution
+message: "Prefer 'docs-as-code'."
+level: warning
+ignorecase: true
+action:
+  name: replace
+  params:
+    - docs-as-code
+swap:
+  DocsAsCode: docs-as-code
+  docsAsCode: docs-as-code
+  Docs as Code: docs-as-code
+  Docs-as-code: docs-as-code
+  docs as code: docs-as-code

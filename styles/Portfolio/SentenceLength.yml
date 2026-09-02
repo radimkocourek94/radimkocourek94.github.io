@@ -1,0 +1,5 @@
+extends: metric
+message: "Try to keep sentences short (avg %s words per sentence)."
+level: warning
+formula: 'words / sentences'
+condition: '> 30.0'

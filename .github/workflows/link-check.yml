@@ -1,0 +1,25 @@
+name: Link check
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: '0 6 * * 1' # weekly, Monday
+  workflow_dispatch:
+
+jobs:
+  lychee:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Link Checker
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: >-
+            --no-progress
+            --exclude 'mailto:'
+            --exclude 'https://www\.linkedin\.com/'
+            docs/ src/pages/
+          fail: false
+          jobSummary: true
