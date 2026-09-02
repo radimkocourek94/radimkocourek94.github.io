@@ -25,6 +25,14 @@ const config: Config = {
     v4: true, // Improve compatibility with the upcoming Docusaurus v4
   },
 
+  scripts: [
+    {
+      src: 'https://betterlytics.io/analytics.js',
+      async: true,
+      'data-site-id': 'radimkocourek94-mtk2dz1u',
+    },
+  ],
+
   // Set the production url of your site here
   url: 'https://radimkocourek94.github.io',
   // User site: served from the domain root.
