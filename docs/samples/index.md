@@ -10,7 +10,7 @@ A complete mini documentation set, written to be read as one: a
 **troubleshooting** page.
 
 The product is invented — **Taskline**, a fictional task-automation and
-monitoring SaaS — but the writing is real: the goal is to demonstrate the
+monitoring SaaS — but the writing is real. The goal is to demonstrate the
 patterns (progressive disclosure, task-first how-to guides, reference vs.
 guide separation, failure-first troubleshooting) without borrowing anyone's
 confidential material.
