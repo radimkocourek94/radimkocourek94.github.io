@@ -28,8 +28,7 @@ const FeatureList: FeatureItem[] = [
     description: (
       <>
         UI copy, terminology, and voice &amp; tone for complex workflows.
-        Shown as before/after rewrites with the reasoning attached, not just
-        the result.
+        Shown as before/after rewrites with the reasoning attached.
       </>
     ),
   },
