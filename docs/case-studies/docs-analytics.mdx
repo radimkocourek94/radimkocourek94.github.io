@@ -44,7 +44,7 @@ flowchart TD
         S4[Support ticket tags]
     end
     signals --> T[Triage rule: signal → action]
-    T --> R[Sprint review: shipped, ignored, why]
+    T --> R[Review: shipped, ignored, why]
     R --> C[Ship docs changes]
     C --> M[Watch signals next cycle]
     M --> T
@@ -71,7 +71,7 @@ kind of docs action:
 | High traffic, fine rating | Leave it alone — resist tinkering |
 | Recurring support theme | Absorb into a how-to; link it from the error path |
 
-**3. A fixed cadence.** A short review every sprint: what changed in the
+**3. A fixed cadence.** A short review every month: what changed in the
 signals, what we shipped against them, what we deliberately ignored and
 why. The last column matters — it keeps the data a *tool for decisions*,
 not a compliance exercise.
@@ -111,7 +111,7 @@ moved*, not *revenue grew*.
 ## Artifacts
 
 - The triage table above is the actual working artifact — one page, printed
-  into the sprint review.
+  into a regural review.
 - A zero-result query review, condensed:
 
 ```
