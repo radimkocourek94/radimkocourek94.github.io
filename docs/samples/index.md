@@ -27,8 +27,6 @@ confidential material.
   structure: state → cause → verified fix.
 
 :::info
-Taskline is a fictional product invented for this portfolio. The domain —
-task automation — was chosen precisely because it's distant from my
-day-job subject matter; any resemblance to real platforms ends at familiar
-concepts.
+Taskline is a fictional product invented for this portfolio. The domain was chosen precisely because it's distant from my
+day-job subject matter; any resemblance to real platforms ends at familiar or similar concepts.
 :::
