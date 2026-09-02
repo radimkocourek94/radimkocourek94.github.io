@@ -1,27 +1,145 @@
 /**
- * Global CSS. The classic template bundles Infima; we override the
- * primary palette with a restrained documentary indigo.
+ * Warm editorial theme: cream surfaces, warm ink, terracotta accent.
+ * Typography: system sans for body, ui-monospace for accents
+ * (navbar title, hero subtitle, code).
  */
 
 :root {
-  --ifm-color-primary: #3b4ed8;
-  --ifm-color-primary-dark: #3446c4;
-  --ifm-color-primary-darker: #3141b9;
-  --ifm-color-primary-darkest: #283598;
-  --ifm-color-primary-light: #4d5ddd;
-  --ifm-color-primary-lighter: #5664df;
-  --ifm-color-primary-lightest: #7681e4;
+  /* Terracotta accent ramp */
+  --ifm-color-primary: #b04a21;
+  --ifm-color-primary-dark: #9d421d;
+  --ifm-color-primary-darker: #8c3a19;
+  --ifm-color-primary-darkest: #7c3216;
+  --ifm-color-primary-light: #bf5e38;
+  --ifm-color-primary-lighter: #cf7350;
+  --ifm-color-primary-lightest: #df8f72;
+
+  /* Admonition tiers, warmed */
+  --ifm-color-info: #6b5842;
+  --ifm-color-info-contrast-background: #f0e9df;
+  --ifm-color-info-contrast-foreground: #3a2f24;
+  --ifm-color-success: #5c6b30;
+  --ifm-color-success-contrast-background: #e9ead9;
+  --ifm-color-success-contrast-foreground: #2d3316;
+  --ifm-color-warning: #b0700d;
+  --ifm-color-warning-contrast-background: #f4e8cf;
+  --ifm-color-warning-contrast-foreground: #4a2b06;
+  --ifm-color-danger: #a3382b;
+  --ifm-color-danger-contrast-background: #f0dcd4;
+  --ifm-color-danger-contrast-foreground: #4a1610;
+
+  /* Warm paper surfaces + ink */
+  --ifm-background-color: #faf7f2;
+  --ifm-font-color-base: #26211c;
+  --ifm-footer-background-color: #24201b;
+
+  /* Mono accents */
+  --ifm-font-family-monospace: ui-monospace, 'SF Mono', 'Cascadia Mono',
+    Menlo, Consolas, monospace;
   --ifm-code-font-size: 95%;
-  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+
+  /* Warm code-block chrome */
+  --prism-background-color: #f4eee5;
+  --prism-color: #322c26;
+  --ifm-code-background: #efe7db;
+  --ifm-code-color: #26211c;
+
+  --docusaurus-highlighted-code-line-bg: rgba(176, 74, 33, 0.12);
 }
 
 [data-theme='dark'] {
-  --ifm-color-primary: #8b97f2;
-  --ifm-color-primary-dark: #7a88ee;
-  --ifm-color-primary-darker: #6979ea;
-  --ifm-color-primary-darkest: #5769e6;
-  --ifm-color-primary-light: #9ca6f4;
-  --ifm-color-primary-lighter: #adb4f6;
-  --ifm-color-primary-lightest: #c6cdf9;
-  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+  /* Replace absolute black/white with warm ink/paper anchors */
+  --ifm-color-black: #11100d;
+  --ifm-color-white: #ece6df;
+
+  /* Warm emphasis scale (borders, dividers, code-shadow, navbar) */
+  --ifm-color-emphasis-0: var(--ifm-color-white);
+  --ifm-color-emphasis-100: #26201b;
+  --ifm-color-emphasis-200: #37302a;
+  --ifm-color-emphasis-300: #483e35;
+  --ifm-color-emphasis-400: #6b5f51;
+  --ifm-color-emphasis-500: #897a6a;
+  --ifm-color-emphasis-600: #a39483;
+  --ifm-color-emphasis-700: #b4a696;
+  --ifm-color-emphasis-800: #c6b9a9;
+  --ifm-color-emphasis-900: var(--ifm-color-black);
+  --ifm-color-emphasis-1000: #fff;
+
+  /* Lighter terracotta ramp for dark surfaces */
+  --ifm-color-primary: #dc8a64;
+  --ifm-color-primary-dark: #d0774e;
+  --ifm-color-primary-darker: #c46640;
+  --ifm-color-primary-darkest: #b2532f;
+  --ifm-color-primary-light: #e39a79;
+  --ifm-color-primary-lighter: #eaab8f;
+  --ifm-color-primary-lightest: #f0c2ae;
+
+  /* Admonition tiers, warmed (dark) */
+  --ifm-color-info: #b39c80;
+  --ifm-color-info-contrast-background: #38302a;
+  --ifm-color-info-contrast-foreground: #e2d7ca;
+  --ifm-color-success: #97a266;
+  --ifm-color-success-contrast-background: #2f3320;
+  --ifm-color-success-contrast-foreground: #d8dcc0;
+  --ifm-color-warning: #d69b3a;
+  --ifm-color-warning-contrast-background: #413316;
+  --ifm-color-warning-contrast-foreground: #f0dca4;
+  --ifm-color-danger: #d0644f;
+  --ifm-color-danger-contrast-background: #40201a;
+  --ifm-color-danger-contrast-foreground: #efc1b4;
+
+  /* Warm charcoal surfaces + warm off-white ink */
+  --ifm-background-color: #201b16;
+  --ifm-font-color-base: #ece6df;
+
+  /* Warm code-block chrome (dark) */
+  --prism-background-color: #2a251f;
+  --prism-color: #e8e1d9;
+  --ifm-code-background: #332d26;
+  --ifm-code-color: #ece6df;
+
+  --docusaurus-highlighted-code-line-bg: rgba(220, 138, 100, 0.25);
+}
+
+/* Terracotta selection — a small signature detail. */
+::selection {
+  background: var(--ifm-color-primary);
+  color: #ffffff;
+}
+
+/* Keep the hero quiet: no colored band, page surface shows through. */
+.hero--primary {
+  background: transparent;
+  color: var(--ifm-font-color-base);
+}
+
+/* Dark navbar: Infima hardcodes a near-black; use the palette's warm charcoal
+   + matching warm border/hover tones. */
+/* Warm the hero on dark instead of pure white-on-black. */
+[data-theme='dark'] {
+  --ifm-hero-text-color: var(--ifm-font-color-base);
+}
+
+/* Infima pins navbar colors to emphasis; the hero uses those pins. Warm
+   the dark navbar surface + border + hover, matching the palette. */
+[data-theme='dark'] .navbar {
+  --ifm-navbar-background-color: var(--ifm-color-emphasis-100);
+  --ifm-navbar-border-color: var(--ifm-color-emphasis-300);
+  --ifm-navbar-link-hover-color: var(--ifm-color-primary);
+}
+
+/* Re-tone the "dark" footer: Infima hardcodes a blue-gray; use warm charcoal. */
+.footer--dark {
+  --ifm-footer-background-color: #24201b;
+  --ifm-footer-title-color: #ece6df;
+}
+
+/* Mono accents: brand + tagline read as technical-editorial. */
+.navbar__title,
+.hero__subtitle {
+  font-family: var(--ifm-font-family-monospace);
+}
+
+.navbar__title {
+  font-weight: 600;
 }
