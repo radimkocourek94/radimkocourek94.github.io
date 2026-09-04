@@ -2,7 +2,8 @@
 
 Portfolio of Radim Kocourek — technical writer, content designer,
 documentation engineer. Built with [Docusaurus](https://docusaurus.io/),
-deployed to GitHub Pages by GitHub Actions.
+[React](https://react.dev), and [MDX](https://mdxjs.com), deployed to
+GitHub Pages by GitHub Actions.
 
 ## Structure
 
