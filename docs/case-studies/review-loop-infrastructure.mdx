@@ -16,7 +16,7 @@ documentation lives in Git alongside the product code: a docs-as-code
 setup where every change is a merge request. The docs are AsciiDoc
 sources, assembled by Antora, published through AWS.
 
-The bottleneck is never writing. It's **reviewing**.
+The bottleneck is **reviewing**, not writing.
 
 ## Problem
 
@@ -30,10 +30,6 @@ PMs) have to either:
 The predictable outcome: review cycles of days, feedback arriving in batches
 of "one more thing", and a real cost in lost context between each round.
 
-The second, quieter problem: **feedback lives in merge-request comments
-detached from the rendered page**. Discussing a paragraph means pasting it
-into a comment and describing where it is.
-
 ## Approach
 
 Two infrastructure pieces, built one after the other and designed to
@@ -42,7 +38,7 @@ compose:
 **1. Rendered previews for any branch on demand.** A GitLab CI/CD pipeline
 that lets you build any branch in a matter of minutes on demand and deploys it to a static site host (let's say GitLab Pages).
 
-The work has two non-obvious parts:
+The work has two parts:
 
 - **Multi-project artifacts.** Product documentation is spread across
   several repositories. The pipeline resolves which cross-repo dependencies
