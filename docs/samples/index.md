@@ -17,13 +17,13 @@ confidential material.
 
 ## The set
 
-- **[Quickstart](/docs/samples/quickstart)** — zero to a first working
+- **[Quickstart](/docs/samples/quickstart)** – zero to a first working
   monitor in under ten minutes.
-- **[How-to: enforce an automation SLA](/docs/samples/how-to-enforce-a-data-sla)** — one
-  goal, one sequence, no detours.
-- **[API reference](/docs/samples/api-reference)** — the `monitors`
+- **[How-to: enforce an automation SLA](/docs/samples/how-to-enforce-a-data-sla)** – one
+  goal, one sequence.
+- **[API reference](/docs/samples/api-reference)** – the `monitors`
   endpoint, framed OpenAPI-style.
-- **[Troubleshooting](/docs/samples/troubleshooting)** — a failure-first
+- **[Troubleshooting](/docs/samples/troubleshooting)** – a failure-first
   structure: state → cause → verified fix.
 
 :::info
