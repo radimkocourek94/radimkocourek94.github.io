@@ -31,3 +31,14 @@ npm run serve   # serve the production build locally
 Every push to `main` runs `.github/workflows/deploy.yml`: build → upload →
 deploy to GitHub Pages. The repository must have Pages set to
 **Settings → Pages → Source: GitHub Actions** (one-time manual step).
+
+## Licensing
+
+**Code** (`src/components/`, `docusaurus.config.ts`, build configuration,
+and related source files) is licensed under the **MIT License**. See the
+[LICENSE](LICENSE) file for details.
+
+**Written content** (`docs/case-studies/`, `docs/samples/`, `docs/meta/`,
+About page, and all other prose content) is © Radim Kocourek. All rights
+reserved unless otherwise noted. This content is not covered by the MIT
+license and may not be reused without explicit permission.
