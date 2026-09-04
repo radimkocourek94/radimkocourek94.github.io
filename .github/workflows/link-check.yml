@@ -18,6 +18,7 @@ jobs:
         with:
           args: >-
             --no-progress
+            --root-dir .
             --exclude 'mailto:'
             --exclude 'https://www\.linkedin\.com/'
             docs/ src/pages/

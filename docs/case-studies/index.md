@@ -11,13 +11,13 @@ from my career.
 
 ## The case studies
 
-- **[Review loop infrastructure](/docs/case-studies/review-loop-infrastructure)** – how a
+- **[Review loop infrastructure](./review-loop-infrastructure.mdx)** – how a
   documentation preview pipeline and a comments system compressed review
   cycles from days to minutes (GitLab CI/CD, AWS).
-- **[AI-assisted docs workflows](/docs/case-studies/ai-docs-plugins)** – Claude Code plugins
+- **[AI-assisted docs workflows](./ai-docs-plugins.mdx)** – Claude Code plugins
   for documentation style checks and automatic UI copy review.
-- **[Data-informed documentation](/docs/case-studies/docs-analytics)** – using
+- **[Data-informed documentation](./docs-analytics.mdx)** – using
   search analytics, feedback signals, and support data to decide what the
   docs fix next.
-- **[UI copy rewrites](/docs/case-studies/ui-copy-rewrites)** – before/after content-design
+- **[UI copy rewrites](./ui-copy-rewrites.mdx)** – before/after content-design
   rewrites on complex SaaS workflows, with the reasoning attached.
