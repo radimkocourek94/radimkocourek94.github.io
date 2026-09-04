@@ -22,11 +22,11 @@ their head is aspirational; a CI rule rigidly enforced is brittle.
 
 Three distinct quality gaps in my current role:
 
-1. **Docs prose drift** — terminology, voice, and structure varied across a
+1. **Docs prose drift** – terminology, voice, and structure varied across a
    growing surface; nobody had a short feedback loop to keep them aligned.
-2. **UI copy lacking a reviewer** — UI copy from many teams rarely went
+2. **UI copy lacking a reviewer** – UI copy from many teams rarely went
    through a content-design pass; when it did, the pass was late.
-3. **Prompt engineering as guesswork** — ad-hoc prompts to generic assistants
+3. **Prompt engineering as guesswork** – ad-hoc prompts to generic assistants
    produced uneven results and couldn't be shared, versioned, or audited.
 
 ## Approach
@@ -37,12 +37,12 @@ built for three workflows:
 **1. Documentation style & syntax checks.** The plugin reads the docs diff
 and our style guide, then produces targeted comments: terminology drift,
 unclear agentic/probabilistic explanations, structure violations. Crucially,
-it **proposes patches** — the comment arrives as a suggestion, not a
+it **proposes patches** – the comment arrives as a suggestion, not a
 judgment.
 
 **2. Automatic UI copy review.** Written for the design-development loop:
 a short pre-review of UI strings for voice, tone, terminology, and
-in-context usefulness — so the early draft doesn't travel without content
+in-context usefulness – so the early draft doesn't travel without content
 design experience attached.
 
 **3. Versioned, auditable prompt flows.** Each plugin is a *documented*
